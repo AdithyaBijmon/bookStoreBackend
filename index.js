@@ -2,6 +2,7 @@
 const express = require('express')
 const cors = require('cors')
 const router = require('./routes/router')
+require('./db/connection')
 
 // loads .env file contents to process.env
 require('dotenv').config()
