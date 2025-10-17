@@ -42,7 +42,7 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    catergory: {
+    category: {
         type: String,
         required: true
     },
@@ -63,7 +63,7 @@ const bookSchema = new mongoose.Schema({
         default: ""
     },
 
-})
+}) 
 
-const books = mongoose.model("books")
+const books = mongoose.model("books",bookSchema)
 module.exports = books
