@@ -18,6 +18,7 @@ bookStoreServer.use(express.json())
 
 // routing
 bookStoreServer.use(router)
+bookStoreServer.use('/uploads',express.static('./uploads'))
 
 // create PORT
 const PORT = 5500

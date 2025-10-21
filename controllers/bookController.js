@@ -33,3 +33,43 @@ exports.addBookController =  async (req,res) =>{
 
 
 }
+
+
+// get home books
+exports.getHomeBooks = async (req,res)=>{
+  console.log("Inside GetHomeBooks")
+  try{
+    const allHomeBooks = await books.find().sort({_id:-1}).limit(4)
+    res.status(200).json(allHomeBooks)
+  }catch(err){
+    console.log(err)
+  }
+}
+
+// get all books
+exports.getAllBooks = async (req,res)=>{
+  console.log("Inside getAllBooks")
+  const email = req.payload
+  try{
+    const allBooks = await books.find({userMail:{$ne:email}})
+    res.status(200).json(allBooks)
+  }catch(err){
+    console.log(err)
+  }
+}
+
+// view book 
+
+exports.viewBookController = async (req,res) =>{
+    console.log("Inside view Book")
+    const {id} = req.params
+  try{
+    const viewBook = await books.findById(id==id)
+    res.status(200).json(viewBook)
+  }catch(err){
+    console.log(err)
+  }
+}
+
+
+
