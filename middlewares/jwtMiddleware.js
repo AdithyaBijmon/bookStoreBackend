@@ -1,21 +1,19 @@
 const jwt = require('jsonwebtoken')
 
-const jwtMiddleware = (req,res,next)=>{
-    console.log("inside jswt middleware")
-    
-    const token = req.headers.authorization.split(" ")[1]
-    // console.log(token)
+const jwtMiddleware = (req, res, next) => {
+    console.log("inside jwt middleware")
 
-    try{
-        const jwtResponse = jwt.verify(token,process.env.JWTSECRET)
-        console.log(jwtResponse)
+    let token = req.headers.authorization.split(" ")[1] 
+    token = token.trim().replace(/"/g, '') 
+
+    try {
+        
+        const jwtResponse = jwt.verify(token, process.env.JWTSECRET)
         req.payload = jwtResponse.userMail
         next()
-    }catch(err){
-        res.status(401).json("Invalid token",err)
+    } catch (err) {
+       console.log("Invalid token",err)
     }
-
-   
 }
 
-module.exports = jwtMiddleware 
+module.exports = jwtMiddleware
