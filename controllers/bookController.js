@@ -48,7 +48,7 @@ exports.getAllBooks = async (req, res) => {
   console.log("Inside getAllBooks")
   const searchKey = req.query.search
   const email = req.payload
-  
+
   const query = {
     title: { $regex: searchKey, $options: 'i' },
     userMail: { $ne: email }
@@ -82,7 +82,7 @@ exports.getAllUserBooks = async (req, res) => {
   const email = req.payload
 
   try {
-    const allUserBooks = await books.find({userMail:email})
+    const allUserBooks = await books.find({ userMail: email })
     res.status(200).json(allUserBooks)
   } catch (err) {
     console.log(err)
@@ -95,7 +95,7 @@ exports.getAllUserBoughtBooks = async (req, res) => {
   const email = req.payload
 
   try {
-    const allUserBoughtBooks = await books.find({bought:email})
+    const allUserBoughtBooks = await books.find({ bought: email })
     res.status(200).json(allUserBoughtBooks)
   } catch (err) {
     console.log(err)
@@ -104,17 +104,47 @@ exports.getAllUserBoughtBooks = async (req, res) => {
 
 // remove user uploaded book
 
-exports.deleteUserBook = async (req,res)=>{
+exports.deleteUserBook = async (req, res) => {
   console.log("Inside delete user book")
-  const {id} = req.params
+  const { id } = req.params
   console.log(id)
 
-  try{
-    await books.findByIdAndDelete({_id:id})
+  try {
+    await books.findByIdAndDelete({ _id: id })
     res.status(200).json("Deleted successfully!")
   }
-  catch(err){
+  catch (err) {
     res.status(500).json(err)
+  }
+}
+
+// get all books in admin resource page
+exports.getAllBooksAdmin = async (req, res) => {
+  console.log("Inside get all books in admin")
+  try {
+    const allAdminBooks = await books.find()
+    res.status(200).json(allAdminBooks)
+
+  }
+  catch (err) {
+    res.status(500).json(err)
+
+  }
+}
+
+// update book status
+exports.approveBooks = async (req, res) => {
+  console.log("Inside approve book")
+  const { _id, title, author, noOfPages, imgUrl, price, discountPrice, abstract, publisher, language, isbn, category, uploadImg, status, userMail, bought } = req.body
+
+  try {
+    const approveBook = await books.findByIdAndUpdate({ _id },{title, author, noOfPages, imgUrl, price, discountPrice, abstract, publisher, language, isbn, category, uploadImg, status:"approved", userMail, bought},{new:true})
+
+    res.status(200).json(approveBook)
+
+
+  } catch (err) {
+    res.status(500).json("Something went wrong", err)
   }
 }
 
