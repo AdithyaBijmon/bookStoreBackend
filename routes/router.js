@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerController, loginController, googleLoginController, updateUserProfile, getAllUsers } = require('../controllers/userController');
+const { registerController, loginController, googleLoginController, updateUserProfile, getAllUsers, updateAdminProfile } = require('../controllers/userController');
 const { addBookController, getHomeBooks, getAllBooks, viewBookController, getAllUserBooks, getAllUserBoughtBooks, deleteUserBook, getAllBooksAdmin, approveBooks } = require('../controllers/bookController');
 const jwtMiddleware = require('../middlewares/jwtMiddleware');
 const multerConfig = require('../middlewares/ImageUploadMiddleware');
@@ -21,6 +21,7 @@ router.put('/user-profile/edit',jwtMiddleware,multerConfig.single('profile'),upd
 router.get('/all-users',adminJwtMiddleware,getAllUsers)
 router.get('/admin-all-books',adminJwtMiddleware,getAllBooksAdmin)
 router.put('/admin/book/approve',adminJwtMiddleware,approveBooks)
+router.put('/admin-profile/edit',adminJwtMiddleware,multerConfig.single('profile'),updateAdminProfile)
 
 
 module.exports = router;
