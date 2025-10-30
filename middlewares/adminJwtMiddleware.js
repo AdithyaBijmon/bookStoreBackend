@@ -4,7 +4,7 @@ const adminJwtMiddleware = (req, res, next) => {
     console.log("Inside admin middleware")
     let token = req.headers.authorization.split(" ")[1]
     token = token.trim().replace(/"/g, '')
-    console.log(token);
+    // console.log(token);
 
     try {
         const jwtResponse = jwt.verify(token, process.env.JWTSECRET)
