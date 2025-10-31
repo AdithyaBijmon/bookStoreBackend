@@ -5,6 +5,8 @@ const jwtMiddleware = require('../middlewares/jwtMiddleware');
 const multerConfig = require('../middlewares/ImageUploadMiddleware');
 const adminJwtMiddleware = require('../middlewares/adminJwtMiddleware');
 const { addJobController, getAllJobsController, removeJobController } = require('../controllers/jobController');
+const pdfMulterConfig = require('../middlewares/pdfMulterMiddleware');
+const { addApplication, getApplications } = require('../controllers/applicationController');
 const router = express.Router()
 
 router.post('/register', registerController)
@@ -23,6 +25,8 @@ router.get('/user-bought-books',jwtMiddleware,getAllUserBoughtBooks)
 router.delete('/user-book/:id/remove',jwtMiddleware,deleteUserBook)
 router.put('/user-profile/edit',jwtMiddleware,multerConfig.single('profile'),updateUserProfile)
 router.get('/all-users',adminJwtMiddleware,getAllUsers)
+// add application by user
+router.post('/add-application',jwtMiddleware,pdfMulterConfig.single('resume'),addApplication)
 
 // admin
 router.get('/admin-all-books',adminJwtMiddleware,getAllBooksAdmin)
@@ -30,6 +34,9 @@ router.put('/admin/book/approve',adminJwtMiddleware,approveBooks)
 router.put('/admin-profile/edit',adminJwtMiddleware,multerConfig.single('profile'),updateAdminProfile)
 router.post('/admin/add-job',adminJwtMiddleware,addJobController)
 router.delete('/admin/:id/remove-job',adminJwtMiddleware,removeJobController)
+// get application
+router.get('/all-applications',adminJwtMiddleware,getApplications)
+
 
 
 module.exports = router;
